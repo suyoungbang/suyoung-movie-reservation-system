@@ -8,7 +8,7 @@ public enum Genre {
     ANIMATION(5, "애니메이션"),
     THRILLER(6, "스릴러");
 
-    // 화면에 표시할 이름과 숫자는 생성 후 변경하지 않음
+    // 화면에 표시할 이름과 숫자는 생성 후 변경하지 않는다
     private final int genreNumber;
     private final String description;
 
@@ -25,7 +25,7 @@ public enum Genre {
         return description;
     }
 
-    // 사용자가 입력한 장르 번호와 일치하는 값 반환
+    // 사용자가 입력한 장르 번호와 일치하는 값 반환한다
     public static Genre fromGenreNumber(int genreNumber) {
 
         Genre[] genres = Genre.values();
@@ -35,7 +35,7 @@ public enum Genre {
                 return genres[i];
             }
         }
-        // 일치하는 장르가 없으면 잘못된 번호로 판단
+        // 일치하는 장르가 없으면 잘못된 번호로 판단한다
         throw new IllegalArgumentException("목록에 있는 장르 번호를 입력해주세요.");
     } // fromGenreNumber()
 }

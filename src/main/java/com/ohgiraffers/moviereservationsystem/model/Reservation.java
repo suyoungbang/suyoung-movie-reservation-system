@@ -16,8 +16,8 @@ public class Reservation {  // 영화 예매에 대한 정보
     private LocalDate reservationDate; // 예매날짜
 
     // 매개변수 있는 생성자 만들기
-    // reservationId는 자동으로 부여할 예정이기 때문에 제외하고 만듦
-    // 예매 날짜는 예매할 때의 날짜를 자동 저장하기 때문에 매개변수에서 제외하고 LocalDate.now()로 자동설정
+    // reservationId는 자동으로 부여할 예정이기 때문에 제외하고 만든다
+    // 예매 날짜는 예매할 때의 날짜를 자동 저장하기 때문에 매개변수에서 제외하고 LocalDate.now()로 자동설정한다
     public Reservation(String movieTitle, Genre genre, LocalTime screeningTime, LocalDate screeningDate,
                        String seatNumber, String customerName, int price) {
         this.movieTitle = movieTitle;
@@ -96,7 +96,7 @@ public class Reservation {  // 영화 예매에 대한 정보
 
     public LocalDate getReservationDate() {
         return reservationDate;
-    } // 예매날짜는 조회만 하고 생성 후 변경하지 않기 때문에 setter 없이 getter만 만듦
+    } // 예매날짜는 조회만 하고 생성 후 변경하지 않기 때문에 setter 없이 getter만 만든다
 
     @Override
     public String toString() {
