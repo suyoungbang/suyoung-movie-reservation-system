@@ -186,7 +186,7 @@ public class ReservationView { // 사용자가 직접 보는 화면(view)
                 return LocalTime.parse(input, formatter);
             } catch (DateTimeParseException e) {
                 displayError(
-                        "시간은 시:분 형식으로 입력해주세요. (예: 14:30)"
+                        "시간은 시:분 형식으로 입력해주세요. (예: 14:30) "
                 );
             }
         }
