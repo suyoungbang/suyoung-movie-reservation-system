@@ -21,13 +21,14 @@ public class ReservationView { // 사용자가 직접 보는 화면(view)
     public void displayReservationList(List<Reservation> reservations) {
 
         if (reservations.isEmpty()) {
-            System.out.println("등록된 예매 내역이 없습니다.");
+            System.out.println("조회된 예매 내역이 없습니다.");
             return;
         }
 
         reservations.forEach(System.out::println);
     } // displayReservationList()
 
+    // 예매 상세내역 출력
     public void displayReservation(Reservation reservation) {
         System.out.println(reservation); // 일단 이렇게 해놓고 이따가 변경
     }
