@@ -58,7 +58,10 @@ public class ReservationController { // 입력이 들어왔을 때 문제 유무
         );
 
         repository.save(reservation);
-        view.displaySuccess("예매가 완료되었습니다.");
+        view.displaySuccess(
+                String.format("예매가 완료되었습니다. (예매 번호: %d, 결제 금액: %,d원)",
+                        reservation.getReservationId(), reservation.getPrice())
+        ); // 직접 입력해보니 사용자는 본인의 예매 번호와 결제 금액을 알 수 없어서 출력해주는 것으로 변경
     } // registerReservation()
 
 
@@ -78,7 +81,7 @@ public class ReservationController { // 입력이 들어왔을 때 문제 유무
 
         // 입력한 번호가 존재하지 않을 때
         if (reservation == null) {
-            view.displayError("해당 번호의 예매 내역을 찾을 수 없습니다. 다시 입력해주세요.");
+            view.displayError("해당 번호의 예매 내역을 찾을 수 없습니다.");
             return;
         }
 
@@ -89,7 +92,7 @@ public class ReservationController { // 입력이 들어왔을 때 문제 유무
     public void searchReservationsByMovieTitle(String movieTitle) {
 
         List<Reservation> reservations = repository.findByMovieTitle(movieTitle);
-        view.displayMessage("'" + movieTitle.trim() + "'의 예매 내역 결과입니다.");
+        view.displayMessage("'" + movieTitle.trim() + "'의 예매 내역입니다.");
         view.displayReservationList(reservations);
 
     }
@@ -97,7 +100,7 @@ public class ReservationController { // 입력이 들어왔을 때 문제 유무
     // 장르별 예매 내역 조회
     public void showReservationsByGenre(Genre genre) {
 
-        view.displayMessage(genre.getDescription() + " 장르의 예매 내역 결과입니다.");
+        view.displayMessage(genre.getDescription() + " 장르의 예매 내역입니다.");
         view.displayReservationList(repository.findByGenre(genre));
 
     }
