@@ -50,7 +50,7 @@ public class Application {
             Genre genre = view.readGenre("영화 장르를 선택해주세요. : ");
             LocalDate screeningDate = view.readDate("상영 날짜를 입력해주세요. (예: 2026-08-20) : ");
             LocalTime screeningTime = view.readTime("상영 시간을 입력해주세요. (예: 14:30) : ");
-            String seatNumber = view.readLine("좌석 번호 : ");
+            String seatNumber = view.readLine("좌석 번호 (예: A10) : ");
             String customerName = view.readLine("예매자 이름 : ");
 
             controller.registerReservation(movieTitle, genre, screeningTime, screeningDate, seatNumber, customerName);
@@ -67,7 +67,7 @@ public class Application {
                     case 1 -> reservationController.showAllReservations();
                     case 2 -> reservationController.showReservationDetails(view.readInt("조회할 예매 번호 : "));
                     case 3 -> reservationController.searchReservationsByMovieTitle(view.readLine("검색할 영화 제목 : "));
-                    case 4 -> reservationController.showReservationsByGenre(view.readGenre("조회할 장르를 선택해주세요. : "));
+                    case 4 -> reservationController.showReservationsByGenre(view.readGenre("조회할 장르 : "));
                     case 8 -> {return;}
 
                     default -> view.displayError("메뉴에 있는 번호를 선택해주세요.");
@@ -81,9 +81,9 @@ public class Application {
         view.displayMessage("---------- 예매 변경 ----------");
 
         int reservationId = view.readInt("변경할 예매의 기존 예매 번호 : ");
-        LocalDate screeningDate = view.readDate("새 상영 날짜(연도-월-일) : ");
-        LocalTime screeningTime = view.readTime("새 상영 시간(시:분) : ");
-        String seatNumber = view.readLine("새 좌석 번호 : ");
+        LocalDate screeningDate = view.readDate("새 상영 날짜 (예: 2026-08-20) : ");
+        LocalTime screeningTime = view.readTime("새 상영 시간 (예: 14:30) : ");
+        String seatNumber = view.readLine("새 좌석 번호 (예:A10) : ");
         String customerName = view.readLine("새 예매자 이름 : ");
 
         controller.updateReservation(reservationId, screeningTime, screeningDate, seatNumber, customerName);
