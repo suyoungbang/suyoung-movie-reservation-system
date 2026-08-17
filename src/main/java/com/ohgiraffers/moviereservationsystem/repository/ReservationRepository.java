@@ -7,18 +7,21 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReservationRepository { // 영화 예매 내역을 저장하고 조회하는 클래스
 
     // 예매 내역을 저장하는 리스트
-    // 해당 arraylist가 다른 리스트를 가리키지 못하게 final로 선언
+    // 해당 arraylist가 다른 리스트를 가리키지 못하게 final로 선언한다
     private final List<Reservation> reservations = new ArrayList<>();
 
     // 예매 번호가 중복되지 않게 관리
-    // 1번부터 번호표 매겨줌
+    // 1번부터 번호표 매겨준다
     private int nextReservationId = 1;
 
-    public ReservationRepository() { initializeReservations();}
+    public ReservationRepository() {
+        initializeReservations();
+    }
 
     // 기능 확인을 위한 초기 예매 데이터
     // LocalDate.now().plusDays(n) : 오늘로부터 n일 뒤
@@ -41,7 +44,7 @@ public class ReservationRepository { // 영화 예매 내역을 저장하고 조
     }
 
     // 예매내역의 목록을 저장
-    // 이때 예매번호는 자동으로 붙고, +1씩 늘어남
+    // 이때 예매번호는 자동으로 붙고, +1씩 늘어난다
     public void save(Reservation reservation) {
         reservation.setReservationId(nextReservationId++);
         reservations.add(reservation);
@@ -54,7 +57,7 @@ public class ReservationRepository { // 영화 예매 내역을 저장하고 조
 
     // 예매 번호와 일치하는 예매 내역 조회
     public Reservation findById(int id) {
-        for (int i =0; i < reservations.size(); i++) {
+        for (int i = 0; i < reservations.size(); i++) {
             Reservation reservation = reservations.get(i);
             if (reservation.getReservationId() == id) {
                 return reservation;
@@ -63,4 +66,40 @@ public class ReservationRepository { // 영화 예매 내역을 저장하고 조
         return null; // 일치하는 예매번호가 없을 때
     }
 
+    /* 영화 제목 검색
+    *  제목을 검색할 때 정확한 띄어쓰기를 하지 않거나 여러번 띄어쓰기를 해도 검색될 수 있도록
+    *  replaceAll("\\s+", "")을 이용해 검색받은 제목과 저장된 영화 제목 공백을 모두 제거한다
+    *  영어 제목의 대소문자를 구분하지 않도록 toLowerCase()를 이용해 소문자로 변환한다
+    */
+    public List<Reservation> findByMovieTitle(String movieTitle) {
+
+        String normalizedKeyword = movieTitle
+                .replaceAll("\\s+", "")
+                .toLowerCase();
+
+        return reservations.stream()
+                .filter(reservation -> reservation.getMovieTitle()
+                                .replaceAll("\\s+", "")
+                                .toLowerCase()
+                                .contains(normalizedKeyword))
+                .collect(Collectors.toList());
+    }
+
+    // 장르별 예매 조회
+    public List<Reservation> findByGenre(Genre genre) {
+        return reservations.stream()
+                .filter(reservation -> reservation.getGenre() == genre)
+                .collect(Collectors.toList());
+    }
+
+    /* 예매 취소
+    *  예매 번호와 일치하는 예매 내역을 삭제한다
+    *  removeIf()를 이용해 조건을 만족하는 요소를 리스트에서 지운다
+    *  실제로 삭제되면 true, 일치하는 번호가 없으면 false를 반환한다
+    */
+    public boolean deleteById(int reservationId) {
+
+        return reservations.removeIf(reservation ->
+                reservation.getReservationId() == reservationId);
+    }
 }
